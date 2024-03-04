@@ -52,7 +52,7 @@ class PostController extends Controller
             ['user_id' => $this->user->id]
         ));
 
-        LogActivity::addToLog($this->user->username . " created post");
+        LogActivity::addToLog($this->user->username . " created post id - " . $post->id);
 
         return response()->json([
             'message' => 'Post successfully stored',
@@ -92,6 +92,9 @@ class PostController extends Controller
             $validator->validated(),
             ['user_id' => \auth('api')->user()->id]
         ));
+
+        LogActivity::addToLog($this->user->username . " updated post id - " . $post->id);
+
         return response()->json([
             'message' => 'Post successfully updated',
             'post' => $post,
@@ -107,6 +110,9 @@ class PostController extends Controller
     public function destroy($id)
     {
         Post::destroy($id);
+
+        LogActivity::addToLog($this->user->username . " deleted post id - " . $id);
+
         return response()->json([
             'message' => 'Post successfully deleted',
         ], 201);

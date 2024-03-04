@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Helpers\LogActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -104,6 +105,9 @@ class AuthController extends Controller
         $user->update(array_merge(
             $validator->validated(),
         ));
+
+        LogActivity::addToLog($this->user->username . " updated his profile");
+
         return response()->json([
             'message' => 'Profile successfully updated',
             'user' => $user

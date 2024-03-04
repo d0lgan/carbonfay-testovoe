@@ -41,3 +41,10 @@ Route::group([
     Route::apiResource('posts',PostController::class);
 });
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'logs'
+], function ($router) {
+    Route::get('/', [\App\Http\Controllers\LogActivityController::class, 'index']);
+});
+
